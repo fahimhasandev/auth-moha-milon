@@ -1,8 +1,9 @@
 import React, { useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../providers/AuthProvider"
 
 const Register = () => {
+  const navigate = useNavigate()
   const { createUser } = useContext(AuthContext)
 
   const handleRegister = e => {
@@ -16,7 +17,11 @@ const Register = () => {
 
     // create user
     createUser(email, password)
-      .then(result => console.log(result.user))
+      .then(result => {
+        console.log(result.user)
+        e.target.reset()
+        navigate("/")
+      })
       .catch(error => console.log(error.message))
   }
   return (
@@ -51,12 +56,12 @@ const Register = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary">Register</button>
             </div>
           </form>
 
           <p className="ml-4 mb-4">
-            New to website? Please{" "}
+            New to website? Please
             <Link to="/login">
               <span className="font-bold underline"> Login</span>
             </Link>
